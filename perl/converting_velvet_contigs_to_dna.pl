@@ -14,11 +14,11 @@ my $filein = shift(@ARGV);
 
 chomp $filein;
 
-open(fazza, $filein) or die "\nSorry could not open that file\n";
+#open(fazza, $filein) or die "\nSorry could not open that file\n";
 
-$filename = <fazza>;
+#$filename = <fazza>;
 
-close fazza;
+#close fazza;
 
 ## based on the first line in fasta, lets alter this to use the file name
 #$filename =~ s/>\.//g;
@@ -39,7 +39,7 @@ print "\n The file's name is $filename.dna";
 
 my @files = ($filein, $filename);
 
-$dna_out = make_dna(@files);
+my $dna_out = make_dna(@files);
 
 sub make_dna {
 	my $in = shift;
