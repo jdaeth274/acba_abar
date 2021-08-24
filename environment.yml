@@ -1,0 +1,12 @@
+name: acba_abar_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - r
+dependencies:
+  - biopython
+  - pandas
+  - argparse
+  - blast
+  - numpy
