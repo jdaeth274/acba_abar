@@ -23,7 +23,7 @@ def make_dna_db(seq_loc):
 
     for seq in range(len(seq_loc)):
         current_seq = seq_loc[seq]
-        grep_cmd = "grep '^>' " + current_seq
+        grep_cmd = "grep -c '^>' " + current_seq
         grep_out = subprocess.check_output(grep_cmd, shell=True)
         grep_num = int(grep_out.strip().decode(encoding="utf-8"))
 
