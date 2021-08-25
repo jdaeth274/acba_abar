@@ -28,30 +28,37 @@ chomp $filein;
 #$filename =~ s/\s+$//;
 
 my $filename = $filein;
+# Get the basename of the file
 my @files_B = split('\/([^\/]+)$', $filename);
-$filename = $files_B[1];
 
-$filename =~ s/\.[a-zA-z].*$//g;
-$filename =~ s/#/_/g;
+my $size = @files_B;
+my $split_file;
+# If just given basename use this
+if($size == 2) {
+	$split_file = $files_B[1];
+}else{
+	$split_file = $files_B[0];
+}
 
 
-print "\n The file's name is $filename.dna";
+$split_file =~ s/\.[a-zA-z].*$//g;
+$split_file =~ s/#/_/g;
 
-my @files = ($filein, $filename);
+my @files = ($filein, $split_file);
 
 my $dna_out = make_dna(@files);
 
 sub make_dna {
 	my $in = shift;
 	my $isolate = shift;
-	my $out = $isolate . ".dna";
+	my $out = $in;
 
-
-	if ($in =~ /.fa|.fasta|.fa|.cons|.seq|.fna/) {
-		$out =~ s/.fa|.fasta|.fa|.cons|.seq|.fna/.dna/g;
+	if ($in =~ /\.fa$|\.fasta$|\.fa$|\.cons$|\.seq$|\.fna$/) {
+		$out =~ s/\.fa$|\.fasta$|\.fa$|\.cons$|\.seq$|\.fna$/\.dna/g;
 	} else {
-		$out = $out.".dna";
+		$out = $out;
 	}
+	print "\n The file's name is $out \n";
 	my $genome;
 	open IN, $in or die print STDERR "Unable to open input file $in\n";
 	while (my $line = <IN>) {
