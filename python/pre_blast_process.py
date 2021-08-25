@@ -125,9 +125,13 @@ def contig_bounds(seqs):
         contig_name = os.path.basename(seqs[seq])
         print(contig_name)
 
-        file_path = "./" + contig_name + "#contig_bounds.csv"
+        file_path = "./contig_bounds/" + contig_name + "#contig_bounds.csv"
 
         contig_bounds.to_csv(path_or_buf=file_path, index=False)
+
+
+
+
 
 
 
