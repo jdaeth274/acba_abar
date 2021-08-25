@@ -73,7 +73,7 @@ def contig_bounds(seqs):
     for seq in range(len(seqs)):
 
         grp_cmd = "grep -n '^>' " + seqs[seq] + " > grep_output_temp"
-        print(grp_cmd)
+        
         try:
             subprocess.check_output(grp_cmd, shell=True)
         except subprocess.SubprocessError:
@@ -123,8 +123,6 @@ def contig_bounds(seqs):
 
 
         contig_name = os.path.basename(seqs[seq])
-        print(contig_name)
-
         file_path = "./contig_bounds/" + contig_name + "#contig_bounds.csv"
 
         contig_bounds.to_csv(path_or_buf=file_path, index=False)
