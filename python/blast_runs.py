@@ -13,7 +13,7 @@ def blast_runs(tmp_dna_dir, data_dir):
     mfa_blast = mfa_file + ".nin"
     if not os.path.exists(mfa_blast):
         print("No BLASTDB file exists")
-        make_db_cmd = "makeblastdb -dbtype nucl -out output.mfa -max_file_sz 2GB -in " + mfa_file
+        make_db_cmd = "makeblastdb -dbtype nucl -out " + tmp_dna_dir + "/output.mfa -max_file_sz 2GB -in " + mfa_file
         try:
             subprocess.check_output(make_db_cmd, shell=True)
         except subprocess.SubprocessError:
