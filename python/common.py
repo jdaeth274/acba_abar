@@ -23,4 +23,3 @@ def main(input_args):
 
     blast_runs.blast_runs(tmp_dna_dir, data_dir)
 
-    
