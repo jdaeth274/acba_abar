@@ -72,7 +72,7 @@ def contig_bounds(seqs):
 
     for seq in range(len(seqs)):
 
-        grp_cmd = "grep -n `^>` " + seqs[seq] + " > grep_output_temp"
+        grp_cmd = "grep -n '^>' " + seqs[seq] + " > grep_output_temp"
         print(grp_cmd)
         try:
             subprocess.check_output(grp_cmd, shell=True)
