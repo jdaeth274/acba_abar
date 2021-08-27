@@ -42,6 +42,12 @@ def make_dna_db(seq_loc):
         elif grep_num == 1:
             new_dna_name = os.path.splitext(os.path.basename(current_seq))[0] + ".dna"
             cp_cmd = "cp " + current_seq + " ./tmp_dna_lib/" + new_dna_name
+            new_fast_header_cmd = "sed -i '1s/.*/\>" + current_seq + "/' ./tmp_dna_lib/" + new_dna_name
+            try:
+                subprocess.check_output(new_fast_header_cmd, shell=True)
+            except subprocess.SubprocessError:
+                sys.exit("Failed renaming the fasta header for the chromosome file iso %s" % os.path.basename(current_seq))
+
             try:
                 subprocess.check_output(cp_cmd, shell=True)
             except subprocess.SubprocessError:
@@ -73,7 +79,7 @@ def contig_bounds(seqs):
     for seq in range(len(seqs)):
 
         grp_cmd = "grep -n '^>' " + seqs[seq] + " > grep_output_temp"
-        
+
         try:
             subprocess.check_output(grp_cmd, shell=True)
         except subprocess.SubprocessError:

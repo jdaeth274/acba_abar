@@ -7,8 +7,8 @@ def main(input_args):
     """ Main function to run through steps of ABar and comM identification
     """
 
-    seq_files = open(input_args.seqs, "r")
-    seq_lines = seq_files.read().splitlines()
+    with open(input_args.seqs, "r") as input_handle:
+        seq_lines = input_handle.read().splitlines()
 
     if input_args.dna_dir is None:
         pre_blast_process.make_dna_db(seq_lines)
