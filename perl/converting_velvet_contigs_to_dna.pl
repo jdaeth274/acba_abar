@@ -41,10 +41,8 @@ if($size == 2) {
 }
 
 
-$split_file =~ s/\.[a-zA-z].*$//g;
-$split_file =~ s/#/_/g;
 
-my @files = ($filein, $split_file);
+my @files = ($split_file, $split_file);
 
 my $dna_out = make_dna(@files);
 
