@@ -49,9 +49,9 @@ my $dna_out = make_dna(@files);
 sub make_dna {
 	my $in = shift;
 	my $isolate = shift;
-	my $out = $in;
+	my $out = $isolate;
 
-	if ($in =~ /\.fa$|\.fasta$|\.fa$|\.cons$|\.seq$|\.fna$/) {
+	if ($isolate =~ /\.fa$|\.fasta$|\.fa$|\.cons$|\.seq$|\.fna$/) {
 		$out =~ s/\.fa$|\.fasta$|\.fa$|\.cons$|\.seq$|\.fna$/\.dna/g;
 	} else {
 		$out = $out;
