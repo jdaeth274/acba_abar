@@ -42,7 +42,7 @@ if($size == 2) {
 
 
 
-my @files = ($split_file, $split_file);
+my @files = ($filein, $split_file);
 
 my $dna_out = make_dna(@files);
 
@@ -67,7 +67,7 @@ sub make_dna {
 	}
 	close IN;
 	open OUT, "> $out" or die print STDERR "Unable to open output file $out\n";
-	print OUT ">$in\n";
+	print OUT ">$isolate\n";
 	my @lines = unpack("(A60)*",$genome);
 	foreach my $line (@lines) {
 		print OUT "$line\n";
