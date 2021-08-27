@@ -45,14 +45,13 @@ def make_dna_db(seq_loc):
             new_fast_header_cmd = "sed -i '1s/.*/\>" + os.path.splitext(os.path.basename(current_seq))[0] + "/' ./tmp_dna_lib/" + new_dna_name
             print(new_fast_header_cmd)
             try:
-                subprocess.check_output(new_fast_header_cmd, shell=True)
-            except subprocess.SubprocessError:
-                sys.exit("Failed renaming the fasta header for the chromosome file iso %s" % os.path.basename(current_seq))
-
-            try:
                 subprocess.check_output(cp_cmd, shell=True)
             except subprocess.SubprocessError:
                 sys.exit("Failed copying the chromosome file into the tmp dna dir for iso %s" % os.path.basename(current_seq))
+            try:
+                subprocess.check_output(new_fast_header_cmd, shell=True)
+            except subprocess.SubprocessError:
+                sys.exit("Failed renaming the fasta header for the chromosome file iso %s" % os.path.basename(current_seq))
 
         else:
             sys.exit("Non-positive number of contigs in fasta file: %s" % os.path.basename(current_seq))
