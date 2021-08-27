@@ -69,7 +69,7 @@ sub make_dna {
 	}
 	close IN;
 	open OUT, "> $out" or die print STDERR "Unable to open output file $out\n";
-	print OUT ">$isolate\n";
+	print OUT ">$in\n";
 	my @lines = unpack("(A60)*",$genome);
 	foreach my $line (@lines) {
 		print OUT "$line\n";
