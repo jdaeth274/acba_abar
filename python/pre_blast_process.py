@@ -43,6 +43,7 @@ def make_dna_db(seq_loc):
             new_dna_name = os.path.splitext(os.path.basename(current_seq))[0] + ".dna"
             cp_cmd = "cp " + current_seq + " ./tmp_dna_lib/" + new_dna_name
             new_fast_header_cmd = "sed -i '1s/.*/\>" + current_seq + "/' ./tmp_dna_lib/" + new_dna_name
+            print(new_fast_header_cmd)
             try:
                 subprocess.check_output(new_fast_header_cmd, shell=True)
             except subprocess.SubprocessError:
