@@ -91,7 +91,7 @@ test_hits_function <- function(blast_csv, ideal_hit_length, contig_dir_loc){
             filter(qstart <= (start_iso$qend + 200))
           if(nrow(next_isos) > 0){
             #browser()
-            start_iso <- start_iso %>% mutate(qend = next_isos[1,"qend"]) %>% mutate(ssend = next_isos[1,"send"]) %>%
+            start_iso <- start_iso %>% mutate(qend = next_isos[1,"qend"]) %>% mutate(send = next_isos[1,"send"]) %>%
               mutate(align = qend - qstart) 
             if(start_iso$align >= ideal_hit_length - 10){
               match_frame <- bind_rows(match_frame, start_iso)
