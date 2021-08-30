@@ -10,3 +10,4 @@ dependencies:
   - argparse
   - blast
   - numpy
+  - r-dplyr

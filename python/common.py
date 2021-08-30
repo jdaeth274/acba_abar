@@ -32,3 +32,8 @@ def main(input_args):
     R_dir = re.sub("python", "R", python_dir_name)
     post_blast_process.merge_blast_hits(contig_dir=contig_bounds,R_dir=R_dir)
 
+    out_name = input_args.output + "_hits.csv"
+    post_blast_process.extract_hits(out_name)
+
+    return True
+

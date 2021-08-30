@@ -4,6 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import argparse
 import sys
+import time
 
 from python.common import main
 
@@ -30,7 +31,10 @@ def parse_args():
     return args
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    main(parse_args())
+    start = time.perf_counter()
+    if main(parse_args()):
+        end = time.perf_counter()
+        print("Took this long to complete: %s (s)" % (end - start))
     sys.exit("Done")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
