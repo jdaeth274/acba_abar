@@ -49,6 +49,7 @@ def extract_hits(out_name):
                 right_hits = right_match[right_match['sstart'] >= (row.loc['send'] - 150000)]
                 if right_hits.empty:
                     continue
+            print(type(right_hits))
             id.append(row.loc['subject'])
             hit_start.append(row.loc['sstart'])
             hit_end.append(right_hits.loc[0,"send"])
