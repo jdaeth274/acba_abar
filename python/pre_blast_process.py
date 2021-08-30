@@ -68,6 +68,8 @@ def make_dna_db(seq_loc):
     except subprocess.SubprocessError:
         sys.exit("Failed creating the mfa DNA file")
 
+    return "./tmp_dna_lib"
+
 def contig_bounds(seqs):
     """ Function to check the bounds of contigs in a file"""
     if os.path.isdir('contig_bounds'):
@@ -132,6 +134,8 @@ def contig_bounds(seqs):
         file_path = "./contig_bounds/" + contig_name + "#contig_bounds.csv"
 
         contig_bounds.to_csv(path_or_buf=file_path, index=False)
+
+        return "./contig_bounds"
 
 
 

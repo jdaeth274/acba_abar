@@ -3,27 +3,34 @@
 ###############################################################################
 
 
-require(dplyr)
+require(dplyr, quietly = TRUE)
 
-left_end_csv <- read.csv("~/Dropbox/phd/acinetobacter_baumannii_work/abar_seqs/left_end_blast.csv",
-                         header = FALSE, stringsAsFactors = FALSE)
-right_end_csv <- read.csv("~/Dropbox/phd/acinetobacter_baumannii_work/abar_seqs/right_end_blast.csv",
-                         header = FALSE, stringsAsFactors = FALSE)
-blast_cols <- c("query","subject","pid","align","gap","mismatch","qstart","qend", "sstart","send","eval","bitscore")
 
-colnames(left_end_csv) <- blast_cols
-colnames(right_end_csv) <- blast_cols
+## Functions 
 
-left_end_isos <- dplyr::count(left_end_csv, subject)
-left_end_csv$contig <- 1
-
+get_input <- function(){
+  args <- commandArgs(trailingOnly = TRUE)
+  
+  if(length(args) != 3){
+      print("Not correct number of inputs, need 3: <left_csv> <right_csv> <contig_loc>")
+      quit(save = "no", status = 1, runLast = FALSE)
+    }
+    
+  left_csv <- args[1]
+  right_csv <- args[2]
+  contig_dir <- args[3]
+  
+  args <- c(left_csv, right_csv, contig_dir)
+  return(args)
+}
+  
 contig_location_adder <- function(isolate, contig_dir, hit_table, iter){
   ## Function to take an input isolate and add in the contig 
   ## numbers for the different hit locations 
-  if(iter == 25) browser()
+  #if(iter == 71) browser()
   contig_dir <- gsub("/$","",contig_dir)
   contig_file <- paste(contig_dir , "/" , isolate , "#contig_bounds.csv", sep = "")
-  
+
   contig_table <- read.csv(contig_file, stringsAsFactors = FALSE)
   hit_table$contig <- NA
   for(row in 1:nrow(hit_table)){
@@ -124,4 +131,25 @@ test_hits_function <- function(blast_csv, ideal_hit_length, contig_dir_loc){
     
   }
 
-test_left <- test_hits_function(left_end_csv,2891, "~/Dropbox/phd/acinetobacter_baumannii_work/abar_seqs/contig_bounds/")
+## Main run 
+
+input_args <- get_input()
+left_end_csv <- read.csv(input_args[1],
+                         header = FALSE, stringsAsFactors = FALSE)
+right_end_csv <- read.csv(input_args[2],
+                          header = FALSE, stringsAsFactors = FALSE)
+blast_cols <- c("query","subject","pid","align","gap","mismatch","qstart","qend", "sstart","send","eval","bitscore")
+
+colnames(left_end_csv) <- blast_cols
+colnames(right_end_csv) <- blast_cols
+cat("\n","Merging left hits")
+test_left <- test_hits_function(left_end_csv,2891, input_args[3])
+cat("\n", "Merging right hits")
+test_right <- test_hits_function(right_end_csv,1871, input_args[3])
+
+write.csv(test_left, file = "./left_end_merged.csv", row.names = FALSE, quote = FALSE)
+write.csv(test_right, file = "./right_end_merged.csv", row.names = FALSE, quote = FALSE)
+
+
+
+
