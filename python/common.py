@@ -30,5 +30,5 @@ def main(input_args):
 
     ## Post-BLAST merging and hit idents
     R_dir = re.sub("python", "R", python_dir_name)
-    post_blast_process.merge_blast_hits(contig_dir=contig_bounds)
+    post_blast_process.merge_blast_hits(contig_dir=contig_bounds,R_dir=R_dir)
 
