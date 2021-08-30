@@ -17,8 +17,29 @@ colnames(right_end_csv) <- blast_cols
 left_end_isos <- dplyr::count(left_end_csv, subject)
 left_end_csv$contig <- 1
 
+contig_location_adder <- function(isolate, contig_dir, hit_table, iter){
+  ## Function to take an input isolate and add in the contig 
+  ## numbers for the different hit locations 
+  if(iter == 25) browser()
+  contig_dir <- gsub("/$","",contig_dir)
+  contig_file <- paste(contig_dir , "/" , isolate , "#contig_bounds.csv", sep = "")
+  
+  contig_table <- read.csv(contig_file, stringsAsFactors = FALSE)
+  hit_table$contig <- NA
+  for(row in 1:nrow(hit_table)){
+    current_hit <- hit_table[row,]
+    current_pos <- c(current_hit$sstart, current_hit$send)
+    contig <- which((contig_table[,1] <= (min(current_pos) + 15)) & ((contig_table[,2] >= (max(current_pos) - 15))))
+    if(length(contig) == 1)
+      hit_table$contig[row] <- contig
+  }
+  
+  return(hit_table)  
+  
+}
 
-test_hits_function <- function(blast_csv, ideal_hit_length){
+
+test_hits_function <- function(blast_csv, ideal_hit_length, contig_dir_loc){
   #browser()
   left_end_isos <- dplyr::count(blast_csv, subject)
   blast_csv <- blast_csv %>% mutate(ori = ifelse(sstart < send, "forward","reverse"))
@@ -34,7 +55,7 @@ test_hits_function <- function(blast_csv, ideal_hit_length){
     match_frame <- NULL
     
     ## Now we need to add in the contig bounds incorporation. 
-    
+    narrowed_blast <- contig_location_adder(current_iso, contig_dir_loc, narrowed_blast, row)
     exact_matches <- filter(narrowed_blast, align >= ideal_hit_length - 10)
     if(nrow(exact_matches) > 0){
       nums <- seq(1,nrow(exact_matches))
@@ -103,4 +124,4 @@ test_hits_function <- function(blast_csv, ideal_hit_length){
     
   }
 
-test_left <- test_hits_function(left_end_csv,2891)
+test_left <- test_hits_function(left_end_csv,2891, "~/Dropbox/phd/acinetobacter_baumannii_work/abar_seqs/contig_bounds/")
