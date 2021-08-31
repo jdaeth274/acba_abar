@@ -13,7 +13,7 @@ def merge_blast_hits(contig_dir, R_dir):
     except:
         subprocess.SubprocessError
 
-def extract_hits(out_name):
+def extract_hits(out_name, contig_use):
     """ Function to take the merged blast dbs and extracate the hits
         using the criteria that a left and right end must be on the
         same contig and witin 150k of each other on that contig"""
@@ -37,28 +37,51 @@ def extract_hits(out_name):
         if current_right_row.empty:
             continue
         for index, row in current_left_row.iterrows():
-            right_match = current_right_row[(current_right_row['ori'] == current_left_row.loc[index,'ori']) & \
-                                            (current_right_row['contig'] == row.loc['contig'])]
-            if right_match.empty:
-                continue
-            if row.loc['ori'] == "forward":
-                right_hits = right_match[right_match['sstart'] <= (row.loc['send'] + 150000)]
-                if right_hits.empty:
+            if contig_use:
+                right_match = current_right_row[(current_right_row['ori'] == current_left_row.loc[index,'ori']) & \
+                                                (current_right_row['contig'] == row.loc['contig'])]
+                if right_match.empty:
                     continue
-                right_hits = right_hits.sort_values(by='sstart', ascending=True)
-                right_hits = right_hits.reset_index(drop = True)
-            elif row.loc['ori'] == "reverse":
-                right_hits = right_match[right_match['sstart'] >= (row.loc['send'] - 150000)]
-                if right_hits.empty:
-                    continue
-                right_hits =  right_hits.sort_values(by='sstart', ascending=False)
-                right_hits = right_hits.reset_index(drop=True)
+                if row.loc['ori'] == "forward":
+                    right_hits = right_match[right_match['sstart'] <= (row.loc['send'] + 150000)]
+                    if right_hits.empty:
+                        continue
+                    right_hits = right_hits.sort_values(by='sstart', ascending=True)
+                    right_hits = right_hits.reset_index(drop = True)
+                elif row.loc['ori'] == "reverse":
+                    right_hits = right_match[right_match['sstart'] >= (row.loc['send'] - 150000)]
+                    if right_hits.empty:
+                        continue
+                    right_hits =  right_hits.sort_values(by='sstart', ascending=False)
+                    right_hits = right_hits.reset_index(drop=True)
 
-            id.append(row.loc['subject'])
-            hit_start.append(row.loc['sstart'])
-            hit_end.append(right_hits.loc[0,"send"])
-            ori.append(row.loc['ori'])
-            contig.append(row.loc['contig'])
+                id.append(row.loc['subject'])
+                hit_start.append(row.loc['sstart'])
+                hit_end.append(right_hits.loc[0,"send"])
+                ori.append(row.loc['ori'])
+                contig.append(row.loc['contig'])
+            else:
+                right_match = current_right_row[(current_right_row['ori'] == current_left_row.loc[index, 'ori'])]
+                if right_match.empty:
+                    continue
+                if row.loc['ori'] == "forward":
+                    right_hits = right_match[right_match['sstart'] <= (row.loc['send'] + 150000)]
+                    if right_hits.empty:
+                        continue
+                    right_hits = right_hits.sort_values(by='sstart', ascending=True)
+                    right_hits = right_hits.reset_index(drop=True)
+                elif row.loc['ori'] == "reverse":
+                    right_hits = right_match[right_match['sstart'] >= (row.loc['send'] - 150000)]
+                    if right_hits.empty:
+                        continue
+                    right_hits = right_hits.sort_values(by='sstart', ascending=False)
+                    right_hits = right_hits.reset_index(drop=True)
+
+                id.append(row.loc['subject'])
+                hit_start.append(row.loc['sstart'])
+                hit_end.append(right_hits.loc[0, "send"])
+                ori.append(row.loc['ori'])
+                contig.append(row.loc['contig'])
 
 
     out_data = {

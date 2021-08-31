@@ -7,7 +7,7 @@ import re
 def main(input_args):
     """ Main function to run through steps of ABar and comM identification
     """
-
+    print(input_args)
     with open(input_args.seqs, "r") as input_handle:
         seq_lines = input_handle.read().splitlines()
 
@@ -33,7 +33,7 @@ def main(input_args):
     post_blast_process.merge_blast_hits(contig_dir=contig_bounds,R_dir=R_dir)
 
     out_name = input_args.output + "_hits.csv"
-    post_blast_process.extract_hits(out_name)
+    post_blast_process.extract_hits(out_name, input_args.no_contigs)
 
     return True
 

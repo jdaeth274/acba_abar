@@ -25,6 +25,8 @@ def parse_args():
                         type=str)
     parser.add_argument('--contig-bounds', default=None, help="Location of the contig bounds of files", type=str)
     parser.add_argument('--threads', default=1, help='Number of threads to use for ORF finder', type=int)
+    parser.add_argument('--no-contigs', default=True, action='store_false', help='Do not use contig bounds when defining a hit [default = False]')
+
 
     args = parser.parse_args()
 
