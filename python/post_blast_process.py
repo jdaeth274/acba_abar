@@ -27,7 +27,7 @@ def extract_hits(out_name, contig_use):
 
     left_end_vals = left_end_csv.subject.unique()
 
-    out_df = pandas.DataFrame(columns=['id','hit_start','hit_end','orit','contig', 'index'])
+    out_df = pandas.DataFrame(columns=['id','hit_start','hit_end','ori','contig', 'index'])
     for iso_index,subject in enumerate(left_end_vals):
 
         current_left_row = left_end_csv[left_end_csv['subject'] == subject]
