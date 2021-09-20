@@ -50,7 +50,7 @@ def extract_hits(out_name, contig_use):
                 elif row.loc['ori'] == "reverse":
                     print(row)
                     print("############################################################")
-                    print(right_hits)
+                    print(right_match)
                     right_hits = right_match[right_match['sstart'] >= (row.loc['send'] - 150000) &\
                                              right_match['sstart'] <= (row.loc['send'] + 50)]
                     if right_hits.empty:
