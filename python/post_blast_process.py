@@ -51,7 +51,7 @@ def extract_hits(out_name, contig_use):
                     print(row)
                     print("############################################################")
                     print(right_match)
-                    right_hits = right_match[right_match['sstart'] >= (row.loc['send'] - 150000) & right_match['sstart'] <= (row.loc['send'] + 50)]
+                    right_hits = right_match[(right_match['sstart'] >= (row.loc['send'] - 150000)) & (right_match['sstart'] <= (row.loc['send'] + 50))]
                     if right_hits.empty:
                         continue
                     right_hits =  right_hits.sort_values(by='sstart', ascending=True)
