@@ -70,15 +70,15 @@ def extract_hits(out_name, contig_use):
                     other_longer_hits = out_df[(out_df['id'] == row.loc['subject']) &
                                                (out_df['contig'] == row.loc['contig']) &
                                                (out_df['ori'] == "forward") &
-                                               (out_df['sstart'] < new_row["hit_start"]) &
-                                               (out_df['send'] >= new_row["hit_end"])]
+                                               (out_df['hit_start'] < new_row["hit_start"]) &
+                                               (out_df['hit_end'] >= new_row["hit_end"])]
                     if other_longer_hits.empty:
                         ## Check for any hits that will be nested within this new one
                         other_shorter_hits = out_df[(out_df['id'] == row.loc['subject']) &
                                                     (out_df['contig'] == row.loc['contig']) &
                                                     (out_df['ori'] == "forward") &
-                                                    (out_df['sstart'] > new_row['hit_start'] )&
-                                                    (out_df['send'] <= new_row['hit_end'])]
+                                                    (out_df['hit_start'] > new_row['hit_start'] )&
+                                                    (out_df['hit_end'] <= new_row['hit_end'])]
                         if not other_shorter_hits.empty:
                             ## get their index and remove them
                             shorter_indies = other_shorter_hits['index'].to_list()
@@ -91,15 +91,15 @@ def extract_hits(out_name, contig_use):
                     other_longer_hits = out_df[(out_df['id'] == row.loc['subject']) &
                                                (out_df['contig'] == row.loc['contig']) &
                                                (out_df['ori'] == "reverse") &
-                                               (out_df['sstart'] >= new_row["hit_start"]) &
-                                               (out_df['send'] < new_row["hit_end"])]
+                                               (out_df['hit_start'] >= new_row["hit_start"]) &
+                                               (out_df['hit_end'] < new_row["hit_end"])]
                     if other_longer_hits.empty:
                         ## Check for any hits that will be nested within this new one
                         other_shorter_hits = out_df[(out_df['id'] == row.loc['subject']) &
                                                     (out_df['contig'] == row.loc['contig']) &
                                                     (out_df['ori'] == "reverse") &
-                                                    (out_df['sstart'] <= new_row['hit_start']) &
-                                                    (out_df['send'] >= new_row['hit_end'])]
+                                                    (out_df['hit_start'] <= new_row['hit_start']) &
+                                                    (out_df['hit_end'] >= new_row['hit_end'])]
                         if not other_shorter_hits.empty:
                             ## get their index and remove them
                             shorter_indies = other_shorter_hits['index'].to_list()
