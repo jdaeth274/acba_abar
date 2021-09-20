@@ -1,6 +1,7 @@
 import subprocess
 import os
 import pandas
+pandas.set_option('display.max_columns', None)
 
 def merge_blast_hits(contig_dir, R_dir):
     """ Function to run the R scripts for merging the conserved region hits
