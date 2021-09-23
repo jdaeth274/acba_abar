@@ -137,7 +137,17 @@ def extract_hits(out_name, contig_use):
 
     out_df.to_csv(out_name, index=False)
 
+def extract_comM(out_name):
+    '''Function to check if the comM hits in an isolate are intact '''
 
+    blast_cols = ['query', 'subject', 'pid', 'length', 'gap', 'mismatch',
+                  'qstart', 'qend', 'sstart', 'send', 'eval', 'bitscore']
+
+    comM_hits = pandas.read_csv("./comM_hits.csv", names=blast_cols, header=None)
+
+    comM_hitters = comM_hits[comM_hits['align'] >= 1450]
+
+    comM_hitters.to_csv(out_name, index=False)
 
 
 

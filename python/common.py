@@ -26,7 +26,7 @@ def main(input_args):
     data_dir = re.sub("python", "data", python_dir_name)
     #tmp_dna_dir = "./tmp_dna_lib"
 
-    blast_runs.blast_runs(dna_dir, data_dir)
+    blast_runs.blast_runs(dna_dir, data_dir, input_args.comM)
 
     ## Post-BLAST merging and hit idents
     R_dir = re.sub("python", "R", python_dir_name)
@@ -34,6 +34,12 @@ def main(input_args):
 
     out_name = input_args.output + "_hits.csv"
     post_blast_process.extract_hits(out_name, input_args.no_contigs)
+
+    ## Check if want to search for comM
+    if input_args.comM:
+        out_name = input_args.output + "_complete_comM.csv"
+        post_blast_process.extract_comM(out_name)
+    
 
     return True
 
