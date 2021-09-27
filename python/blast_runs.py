@@ -40,7 +40,7 @@ def blast_runs(tmp_dna_dir, data_dir, comM):
     if comM:
         ## Now we'll blast for intact comM
         comM_file = data_dir + "/comM.fasta"
-        blast_cmd = "blastn -db " + mfa_file + " -query " + comM_file + " -outfmt 10 comM_hits.csv -evalue 0.001 -num_alignments 1000000"
+        blast_cmd = "blastn -db " + mfa_file + " -query " + comM_file + " -outfmt 10 -out comM_hits.csv -evalue 0.001 -num_alignments 1000000"
         try:
             subprocess.check_output(blast_cmd, shell=True)
         except:

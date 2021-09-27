@@ -39,7 +39,7 @@ def main(input_args):
     if input_args.comM:
         out_name = input_args.output + "_complete_comM.csv"
         post_blast_process.extract_comM(out_name)
-    
+
 
     return True
 
