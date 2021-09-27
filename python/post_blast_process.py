@@ -140,7 +140,7 @@ def extract_hits(out_name, contig_use):
 def extract_comM(out_name):
     '''Function to check if the comM hits in an isolate are intact '''
 
-    blast_cols = ['query', 'subject', 'pid', 'length', 'gap', 'mismatch',
+    blast_cols = ['query', 'subject', 'pid', 'align', 'gap', 'mismatch',
                   'qstart', 'qend', 'sstart', 'send', 'eval', 'bitscore']
 
     comM_hits = pandas.read_csv("./comM_hits.csv", names=blast_cols, header=None)
