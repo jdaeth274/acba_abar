@@ -11,3 +11,4 @@ dependencies:
   - blast
   - numpy
   - r-dplyr
+  - tqdm
