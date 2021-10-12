@@ -78,7 +78,7 @@ def contig_bounds(seqs):
         sys.exit()
     else:
         os.mkdir("contig_bounds")
-
+    print("This many seqs to get through for contig bounds: " + str(len(seqs)))
     for seq in tqdm.tqdm(range(len(seqs))):
 
         grp_cmd = "grep -n '^>' " + seqs[seq] + " > grep_output_temp"
@@ -136,7 +136,7 @@ def contig_bounds(seqs):
 
         contig_bounds.to_csv(path_or_buf=file_path, index=False)
 
-        return "./contig_bounds"
+    return "./contig_bounds"
 
 
 

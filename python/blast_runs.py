@@ -11,7 +11,8 @@ def blast_runs(tmp_dna_dir, data_dir, comM):
 
     mfa_file = tmp_dna_dir + "/output.mfa"
     mfa_blast = mfa_file + ".nin"
-    if not os.path.exists(mfa_blast):
+    mfa_blast_2 = mfa_file + ".nal"
+    if not os.path.exists(mfa_blast) and not os.path.exists(mfa_blast_2):
         print("No BLASTDB file exists")
         make_db_cmd = "makeblastdb -dbtype nucl -out " + tmp_dna_dir + "/output.mfa -max_file_sz 2GB -in " + mfa_file
         try:
