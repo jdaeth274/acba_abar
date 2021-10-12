@@ -1,3 +1,6 @@
+import subprocess
+import sys
+import tqdm
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
@@ -65,10 +68,10 @@ def write_out_locs(sequence, locs, output, length):
     num_digits = "{0:0=" + str(count) + "d}"
     print("Beginning write out")
 
-    for loc in locs:
+    for loc in tqdm.tqdm(locs):
         iter_val = num_digits.format((counter))
-        print("Writing out %s of %s rows." % (iter_val, tot_length),
-              end="\r", flush=True)
+        # print("Writing out %s of %s rows." % (iter_val, tot_length),
+        #       end="\r", flush=True)
 
         if (loc[1] - loc[0]) < length:
             continue
@@ -77,10 +80,28 @@ def write_out_locs(sequence, locs, output, length):
         current_record = SeqRecord(current_seq, id = current_out,
                                    annotations={"molecule_type":"DNA"})
         SeqIO.write(current_record,(current_out + ".fasta"), "fasta")
-        time.sleep(0.05)
+        time.sleep(0.01)
 
         counter += 1
     print("")
+
+    concat_cmd = "cat " + output + "_*.fasta > " + output + "_total.fasta"
+    try:
+        subprocess.check_call(concat_cmd, shell=True)
+    except subprocess.SubprocessError:
+        rm_cmd = "rm " + output + "_total.fasta"
+        try:
+            subprocess.check_call(rm_cmd, shell=True)
+            subprocess.check_call(concat_cmd, shell=True)
+        except subprocess.SubprocessError:
+            sys.exit("Failed concating the output fragments")
+
+    rm_cmd = "rm " + output + "_[0-9]*.fasta"
+    try:
+        subprocess.check_call(rm_cmd, shell=True)
+    except subprocess.SubprocessError:
+        sys.exit("Failed removing the individual fragment files")
+
 
 if __name__ == '__main__':
     # Get input args

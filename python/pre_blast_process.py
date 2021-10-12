@@ -4,6 +4,7 @@ import sys
 import re
 import pandas
 import numpy
+import tqdm
 
 def make_dna_db(seq_loc):
     """ Function to take in a list of fasta sequences
@@ -78,7 +79,7 @@ def contig_bounds(seqs):
     else:
         os.mkdir("contig_bounds")
 
-    for seq in range(len(seqs)):
+    for seq in tqdm.tqdm(range(len(seqs))):
 
         grp_cmd = "grep -n '^>' " + seqs[seq] + " > grep_output_temp"
 
