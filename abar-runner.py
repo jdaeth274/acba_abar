@@ -29,6 +29,9 @@ def parse_args():
     parser.add_argument('--comM', default=False, action='store_true', help='Find out if comM is disrupted')
     parser.add_argument('--abar-extract', default=False, action='store_true', help='extract fasta seqs of identified abars',
                         dest='abar')
+    parser.add_argument('--no-blast',default=True, action='store_false',
+                        help="Don't run the BLAST search (useful if just want to extract abars)",
+                        dest='blast')
 
 
     args = parser.parse_args()

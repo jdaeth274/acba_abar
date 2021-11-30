@@ -27,18 +27,19 @@ def main(input_args):
         contig_bounds = input_args.contig_bounds
 
     ## BLAST the fragments now
-    python_dir_name = os.path.dirname(os.path.realpath(__file__))
-    data_dir = re.sub("python", "data", python_dir_name)
-    #tmp_dna_dir = "./tmp_dna_lib"
+    if input_args.blast:
+        python_dir_name = os.path.dirname(os.path.realpath(__file__))
+        data_dir = re.sub("python", "data", python_dir_name)
+        #tmp_dna_dir = "./tmp_dna_lib"
 
-    blast_runs.blast_runs(dna_dir, data_dir, input_args.comM)
+        blast_runs.blast_runs(dna_dir, data_dir, input_args.comM)
 
-    ## Post-BLAST merging and hit idents
-    R_dir = re.sub("python", "R", python_dir_name)
-    post_blast_process.merge_blast_hits(contig_dir=contig_bounds,R_dir=R_dir)
+        ## Post-BLAST merging and hit idents
+        R_dir = re.sub("python", "R", python_dir_name)
+        post_blast_process.merge_blast_hits(contig_dir=contig_bounds,R_dir=R_dir)
 
-    out_name = input_args.output + "_hits.csv"
-    post_blast_process.extract_hits(out_name, input_args.no_contigs)
+        out_name = input_args.output + "_hits.csv"
+        post_blast_process.extract_hits(out_name, input_args.no_contigs)
 
     ## Check if want to search for comM
     if input_args.comM:
@@ -60,7 +61,7 @@ def main(input_args):
         else:
             os.mkdir("tmp_dna_lib")
 
-
+        out_name = input_args.output + "_hits.csv"
         hit_csv = abar_extraction.get_file_paths(out_name, dna_list)
         abar_extraction.extract_abars(hit_csv, abar_dir)
 
