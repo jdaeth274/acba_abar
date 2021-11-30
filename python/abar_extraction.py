@@ -20,6 +20,9 @@ def get_file_paths(hit_csv, file_paths):
         print(index)
         current_row = hits_csv.iloc[index]
         current_id = current_row['id']
+        print(current_id)
+        print("~~~~~~~~~~~~~~~~~~~~")
+        print(dna_locs)
         res = [i for i in dna_locs if current_id in i]
         res = str(res[0])
         id_locs.append(res)
