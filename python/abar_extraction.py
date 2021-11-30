@@ -42,9 +42,9 @@ def extract_abars(hit_csv, out_df):
         with open(current_fasta, "r") as fasta_seq:
             fasta = SeqIO.read(fasta_seq, "fasta")
             if current_row['ori'] == "forward":
-                abar = fasta.seq[(current_row['start'] - 1):current_row['end']]
+                abar = fasta.seq[(current_row['hit_start'] - 1):current_row['hit_end']]
             else:
-                abar = fasta.seq[(current_row['end'] - 1):current_row['start']].reverse_complement()
+                abar = fasta.seq[(current_row['hit_end'] - 1):current_row['hit_start']].reverse_complement()
 
             abar_record = SeqRecord(fasta.id + "_abar_seq_" + str(current_row['start']) + str(current_row['end']))
             abar.append(abar_record)
