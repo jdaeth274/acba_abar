@@ -6,6 +6,7 @@ import pandas
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+import re
 
 def get_file_paths(hit_csv, file_paths):
     # Function to load up the ABAR hit csv and
@@ -19,10 +20,8 @@ def get_file_paths(hit_csv, file_paths):
     for index,row in hits_csv.iterrows():
         print(index)
         current_row = hits_csv.iloc[index]
-        current_id = current_row['id']
+        current_id = re.sub("fna","dna",current_row['id'])
         print(current_id)
-        print("~~~~~~~~~~~~~~~~~~~~")
-        print(dna_locs)
         res = [i for i in dna_locs if current_id in i]
         res = str(res[0])
         id_locs.append(res)
