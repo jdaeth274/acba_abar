@@ -59,7 +59,7 @@ def main(input_args):
             shutil.rmtree(abar_dir)
             os.mkdir(abar_dir)
         else:
-            os.mkdir("tmp_dna_lib")
+            os.mkdir(abar_dir)
 
         out_name = input_args.output + "_hits.csv"
         hit_csv = abar_extraction.get_file_paths(out_name, dna_list)
