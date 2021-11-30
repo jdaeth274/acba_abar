@@ -27,6 +27,8 @@ def parse_args():
     parser.add_argument('--threads', default=1, help='Number of threads to use for ORF finder', type=int)
     parser.add_argument('--no-contigs', default=True, action='store_false', help='Do not use contig bounds when defining a hit [default = False]')
     parser.add_argument('--comM', default=False, action='store_true', help='Find out if comM is disrupted')
+    parser.add_argument('--abar-extract', default=False, action='store_true', help='extract fasta seqs of identified abars',
+                        dest='abar')
 
 
     args = parser.parse_args()

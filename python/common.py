@@ -2,7 +2,12 @@ import os
 from python import pre_blast_process
 from python import blast_runs
 from python import post_blast_process
+from python import abar_extraction
 import re
+import subprocess
+import sys
+import shutil
+
 
 def main(input_args):
     """ Main function to run through steps of ABar and comM identification
@@ -39,6 +44,27 @@ def main(input_args):
     if input_args.comM:
         out_name = input_args.output + "_complete_comM.csv"
         post_blast_process.extract_comM(out_name)
+
+    if input_args.abar:
+        dna_cmd = "cd " + dna_dir + " && ls -d $PWD/*.dna > tot_dna_files.txt"
+        dna_list = dna_dir + "/tot_dna_files.txt"
+        try:
+            subprocess.check_output(dna_cmd, shell=True)
+        except subprocess.SubprocessError:
+            sys.exit("Failed making the dna list of isolates for abar extraction")
+
+        abar_dir = input_args.output + "_abar_seqs"
+        if os.path.isdir(abar_dir):
+            shutil.rmtree(abar_dir)
+            os.mkdir(abar_dir)
+        else:
+            os.mkdir("tmp_dna_lib")
+
+
+        hit_csv = abar_extraction.get_file_paths(out_name, dna_list)
+        abar_extraction.extract_abars(hit_csv, abar_dir)
+
+
 
 
     return True
