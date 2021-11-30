@@ -11,12 +11,16 @@ def get_file_paths(hit_csv, file_paths):
     # Function to load up the ABAR hit csv and
     # then append the file paths to these isolates to the csv
 
+    with open(file_paths, "r") as paths:
+        dna_locs = paths.read().splitlines()
+
     hits_csv = pandas.read_csv(hit_csv, header=0)
     id_locs = []
     for index,row in hits_csv.iterrows():
+        print(index)
         current_row = hits_csv.iloc[index]
         current_id = current_row['id']
-        res = [i for i in file_paths if current_id in i]
+        res = [i for i in dna_locs if current_id in i]
         res = str(res[0])
         id_locs.append(res)
 
