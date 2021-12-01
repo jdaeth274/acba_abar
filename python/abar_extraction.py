@@ -46,8 +46,8 @@ def extract_abars(hit_csv, out_df):
             else:
                 abar = fasta.seq[(current_row['hit_end'] - 1):current_row['hit_start']].reverse_complement()
 
-            abar_record = SeqRecord(abar, fasta.id + "_abar_seq_" + str(current_row['hit_start']) + str(current_row['hit_end']), "","")
-            abar_loc = out_df + str(current_row['id']) + "_ABAR.fasta"
+            abar_record = SeqRecord(abar, fasta.id + "_abar_seq_" + str(current_row['hit_start']) + "-" + str(current_row['hit_end']), "","")
+            abar_loc = out_df + "/" + str(current_row['id']) + "_ABAR.fasta"
             SeqIO.write(abar_record, abar_loc, "fasta")
 
 
