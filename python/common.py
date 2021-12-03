@@ -63,7 +63,6 @@ def main(input_args):
         comM_csv = "comM_hits.csv"
         comM_extraction.get_hit_csv(comM_csv, R_dir, contig_dir=contig_bounds)
         hit_csv = comM_extraction.get_file_paths("comM_gaps.csv", dna_list)
-        comM_dir = "comM_gaps_seqs"
         comM_extraction.extract_comM(hit_csv, comM_dir)
 
     if input_args.abar:
