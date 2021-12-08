@@ -61,6 +61,9 @@ test_merger <- function(comm_broken, contig_dir){
       next
     }
     
+    
+    
+    
     cat_num <- k
     cat_char <- nchar(k)
     nchar_dif <- tot_chars - cat_char
@@ -140,13 +143,35 @@ test_merger <- function(comm_broken, contig_dir){
     if(!is.null(concat_hits)){
       ## Merge into one hit with start and end 
       ## Have id hit start hit end ori contig 
-      out_row <- data.frame(matrix(nrow = 1, ncol = 5))
-      colnames(out_row) <- c("id","hit_start","hit_end","ori","contig")
+      concat_hits <- concat_hits %>% arrange(qstart)
+      out_row <- data.frame(matrix(nrow = 1, ncol = 6))
+      colnames(out_row) <- c("id","hit_start","hit_end","ori","contig", "inversion")
       out_row$id <- concat_hits$subject[1]
-      out_row$hit_start <- concat_hits$send[1]
-      out_row$hit_end <- concat_hits$sstart[nrow(concat_hits)]
       out_row$ori <- concat_hits$ori[1]
-      out_row$contig <- out_row$contig[1]
+      out_row$contig <- concat_hits$contig[1]
+      if(concat_hits$ori[1] == "forward"){
+        out_row$hit_start <- concat_hits$send[1]
+        out_row$hit_end <- concat_hits$sstart[nrow(concat_hits)]
+        out_row$inversion <- "no"
+        if(concat_hits$send[1] > concat_hits$sstart[nrow(concat_hits)]){
+          out_row$inversion <- "yes"
+          out_row$hit_start <- concat_hits$sstart[nrow(concat_hits)]
+          out_row$hit_end <- concat_hits$send[1]
+        } 
+        
+      }else{
+        out_row$hit_start <- concat_hits$send[1]
+        out_row$hit_end <- concat_hits$sstart[nrow(concat_hits)]
+        out_row$inversion <- "no"
+        if(concat_hits$send[1] < concat_hits$sstart[nrow(concat_hits)]){
+          out_row$inversion <- "yes"
+          out_row$hit_start <- concat_hits$send[nrow(concat_hits)]
+          out_row$hit_end <- concat_hits$sstart[1]
+        } 
+        
+      }
+      ## check if an inversion in the seqs
+      
       combined_hits <- bind_rows(combined_hits, out_row)  
     }
     
