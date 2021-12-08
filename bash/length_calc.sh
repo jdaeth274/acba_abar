@@ -24,7 +24,7 @@ else
     printf "id,length\n" > $OUT_CSV
 fi
 
-NUM_LINES=$(wc -l $LIST_O_FILES)
+NUM_LINES=$(wc -l < $LIST_O_FILES)
 printf "Beginning read counting on %s files \n \n" $NUM_LINES
 COUNTER=0
 while read line <&3
