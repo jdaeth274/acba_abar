@@ -8,7 +8,7 @@ START=$SECONDS
 if [ $# -lt 3 ]
 then
   echo "MCL use pipelin. Usage:
-  bash ./isa_pipeline.sh <list of fastas> <file_prefix> <MCL inflation value> <threads>"
+  bash ./mcl_runs.sh <list of fastas> <file_prefix> <MCL inflation value> <threads>"
   exit
 fi
 

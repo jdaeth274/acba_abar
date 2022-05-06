@@ -41,7 +41,9 @@ def main(input_args):
 
         out_name = input_args.output + "_hits.csv"
         post_blast_process.extract_hits(out_name, input_args.no_contigs)
-
+        print("#####################################")
+        print(input_args.no_contigs)
+        print("#####################################")
     ## Check if want to search for comM
     if input_args.comM:
         out_name = input_args.output + "_complete_comM.csv"

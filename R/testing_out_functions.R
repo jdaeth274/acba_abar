@@ -12,10 +12,10 @@ get_input <- function(){
   args <- commandArgs(trailingOnly = TRUE)
   
   if(length(args) != 3){
-      print("Not correct number of inputs, need 3: <left_csv> <right_csv> <contig_loc>")
-      quit(save = "no", status = 1, runLast = FALSE)
-    }
-    
+    print("Not correct number of inputs, need 3: <left_csv> <right_csv> <contig_loc>")
+    quit(save = "no", status = 1, runLast = FALSE)
+  }
+  
   left_csv <- args[1]
   right_csv <- args[2]
   contig_dir <- args[3]
@@ -23,7 +23,7 @@ get_input <- function(){
   args <- c(left_csv, right_csv, contig_dir)
   return(args)
 }
-  
+
 contig_location_adder <- function(isolate, contig_dir, hit_table, iter){
   ## Function to take an input isolate and add in the contig 
   ## numbers for the different hit locations 
