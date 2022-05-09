@@ -40,7 +40,7 @@ def main(input_args):
         post_blast_process.merge_blast_hits(contig_dir=contig_bounds,R_dir=R_dir)
 
         out_name = input_args.output + "_hits.csv"
-        post_blast_process.extract_hits(out_name, input_args.no_contigs)
+        post_blast_process.extract_hits(out_name, input_args.no_contigs, input_args.both_present)
         print("#####################################")
         print(input_args.no_contigs)
         print("#####################################")

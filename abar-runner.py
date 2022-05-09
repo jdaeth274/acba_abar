@@ -29,6 +29,9 @@ def parse_args():
     parser.add_argument('--comM', default=False, action='store_true', help='Find out if comM is disrupted')
     parser.add_argument('--abar-extract', default=False, action='store_true', help='extract fasta seqs of identified abars',
                         dest='abar')
+    parser.add_argument('--presence-only', default=FALSE, action='store_true',
+                        help="Basing AbaR presence only on if there is a left end and a right end in a sample, no contig or position cutoff further",
+                        dest='both_present')
     parser.add_argument('--no-blast',default=True, action='store_false',
                         help="Don't run the BLAST search (useful if just want to extract abars)",
                         dest='blast')
