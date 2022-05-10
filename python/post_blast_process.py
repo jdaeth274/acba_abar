@@ -39,10 +39,10 @@ def extract_hits(out_name, contig_use, both_present):
         if both_present:
             new_row = {'id': current_left_row.iloc[0,1],
                            'hit_start':current_left_row.iloc[0,8],
-                           'hit_end':current_right_row.loc[0, "send"],
+                           'hit_end':current_right_row.iloc[0, 9],
                            'ori':current_left_row.iloc[0,12],
-                           'contig':current_left_row.loc[0,'contig'],
-                           'index':(str(iso_index) + "_" + str("baase"))}
+                           'contig':current_left_row.loc[0,14],
+                           'index':(str(iso_index) + "_" + str(current_left_row.loc[0,14]) + "--" + str(current_right_row.loc[0,14]))}
             out_df = out_df.append(new_row, ignore_index=True)
         else:
 
