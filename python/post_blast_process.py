@@ -26,14 +26,22 @@ def extract_hits(out_name, contig_use, both_present):
     ## a hit)
 
     left_end_vals = left_end_csv.subject.unique()
-
-    out_df = pandas.DataFrame(columns=['id','hit_start','hit_end','ori','contig', 'index'])
+    right_end_vals = right_end_csv.subject.unique()
+    out_df = pandas.DataFrame(columns=['id','hit_start','hit_end','ori','contig', 'index', 'both'])
     for iso_index,subject in enumerate(left_end_vals):
 
         current_left_row = left_end_csv[left_end_csv['subject'] == subject]
         current_left_row = current_left_row.sort_values(by = 'sstart', ascending=True)
         current_right_row = right_end_csv[right_end_csv['subject'] == subject]
         if current_right_row.empty:
+            new_row = {'id': current_left_row.iloc[0,1],
+                           'hit_start':current_left_row.iloc[0,8],
+                           'hit_end':-10,
+                           'ori':current_left_row.iloc[0,12],
+                           'contig':current_left_row.iloc[0,14],
+                           'index':(str(iso_index) + "_" + str(current_left_row.iloc[0,14]) + "--" + "None"),
+                           'both':"left"}
+            out_df = out_df.append(new_row, ignore_index=True)
             continue
 
         if both_present:
@@ -42,7 +50,8 @@ def extract_hits(out_name, contig_use, both_present):
                            'hit_end':current_right_row.iloc[0, 9],
                            'ori':current_left_row.iloc[0,12],
                            'contig':current_left_row.iloc[0,14],
-                           'index':(str(iso_index) + "_" + str(current_left_row.iloc[0,14]) + "--" + str(current_right_row.iloc[0,14]))}
+                           'index':(str(iso_index) + "_" + str(current_left_row.iloc[0,14]) + "--" + str(current_right_row.iloc[0,14])),
+                           'both':"Yes"}
             out_df = out_df.append(new_row, ignore_index=True)
         else:
 
@@ -145,6 +154,21 @@ def extract_hits(out_name, contig_use, both_present):
                             'index': (str(iso_index) + "_" + str(index))}
                     out_df = out_df.append(new_row, ignore_index = True)
 
+    for iso_index,subject in enumerate(right_end_vals):
+
+        current_right_row = right_end_csv[right_end_csv['subject'] == subject]
+        current_right_row = current_right_row.sort_values(by = 'sstart', ascending=True)
+        current_left_row = left_end_csv[left_end_csv['subject'] == subject]
+        if current_left_row.empty:
+            new_row = {'id': current_right_row.iloc[0,1],
+                           'hit_start':-10,
+                           'hit_end': current_right_row.iloc[0, 9],
+                           'ori':current_right_row.iloc[0,12],
+                           'contig':current_right_row.iloc[0,14],
+                           'index':(str(iso_index) + "_" + str(current_right_row.iloc[0,14]) + "--" + "None"),
+                           'both':"right"}
+            out_df = out_df.append(new_row, ignore_index=True)
+            continue
 
 
     out_df.to_csv(out_name, index=False)
